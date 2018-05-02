@@ -99,5 +99,14 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Resturant.Infrastructure\Resturant.Infrastructure.csproj">
+      <Project>{1b8323c7-87cd-425c-84e4-b80c4352f6ea}</Project>
+      <Name>Resturant.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

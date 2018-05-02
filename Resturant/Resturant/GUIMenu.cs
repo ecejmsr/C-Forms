@@ -4,16 +4,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using Resturant.Data;
+using Resturant.Infrastructure;
+using Resturant.Infrastructure.Common;
 
 
 namespace Resturant
 {
-    class GUIMenu
+    class GUIMenu : ApplicationBase
     {
-
+        public GUIMenu() : base(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType) { }
         public void StartUp()
         {
             Console.WriteLine("\t\t\t\t Welcome to my App");
@@ -55,6 +58,7 @@ namespace Resturant
                         Console.WriteLine("2) Display as: Z-A");
                         Console.WriteLine("3) Display by: Rating");
                         intSelection = CheckInput();
+                        Console.Clear();
                         if (intSelection == 1)
                         {
                             IEnumerable<resturant_info> sortedList = libHelper.SortingByName();
@@ -98,6 +102,7 @@ namespace Resturant
                         Console.Clear();
                         Console.WriteLine("Enter resturant name to view information");
                         string lookUpResturant = Console.ReadLine();
+                        Log.Info(lookUpResturant);
                         IEnumerable<resturant_info> sortedLookUp = libHelper.SortingByName();
                         IEnumerable<resturant_info> restruantFound= sortedLookUp.Where(x => x.rest_name.Contains(lookUpResturant));
                         Console.Clear();
@@ -131,6 +136,7 @@ namespace Resturant
         public int CheckInput()
         {
             string Selection = Console.ReadLine();
+            Log.Info(Selection);
             int intSelection = 0;
             if (Selection != "")
             {

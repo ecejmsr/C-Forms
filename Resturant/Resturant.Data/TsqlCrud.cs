@@ -1,14 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Resturant.Infrastructure.Common;
 
 
 namespace Resturant.Data
 {
-    public class TsqlCrud
+    public class TsqlCrud : ApplicationBase
     {
+        //Nlogger
+        public TsqlCrud() : base(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType) { }
+
+
+
         ResturantsEntities db = new ResturantsEntities();
         //Read All Resturants
         public IEnumerable<resturant_info> ShowResturants()
@@ -19,6 +26,7 @@ namespace Resturant.Data
         public IEnumerable<resturant_info> GetResturantInfo()
         {
             IEnumerable<resturant_info> result;
+            
             using (var db = new ResturantsEntities())
             {
                 var dataList = db.resturant_info.ToList();
@@ -26,7 +34,33 @@ namespace Resturant.Data
             }
 
             return result;
+
         }
+
+        //NEED TO IMPLEMENT SOMETHING TO WORK WITH REVIEWS
+
+        //ADDING NEW RESTURANT
+        public resturant_info AddResturant(resturant_info item)
+        {
+            try
+            {
+                using (var db = new ResturantsEntities())
+                {
+                    db.resturant_info.Add(LibraryToData(item));
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception e)
+            {
+                LogError(e.ToString());
+            }
+
+            return item;
+
+        }
+
+
+        //SORTING
 
         public IEnumerable<resturant_info> SortingByName()
         {
@@ -103,5 +137,6 @@ namespace Resturant.Data
             return dataModel;
         }
         
+          
     }
 }
